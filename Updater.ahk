@@ -101,7 +101,7 @@ CheckUpdate(e,_) {
     }
 }
 
-UpdateLib(e,_) {
+UpdateLib(*) {
     global LibsUpdate
     global LibsUrl
     global Wifi
