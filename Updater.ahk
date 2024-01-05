@@ -97,8 +97,6 @@ CheckUpdate(e,_) {
         case "WinHttp Lib":
             LibsUpdate.InsertAt(5,e.Value)
             return
-        default:
-            return
     }
 }
 
