@@ -83,19 +83,19 @@ CheckUpdate(e,_) {
     global LibsUpdate
     switch e.Text {
         case "Json lib":
-            LibsUpdate.InsertAt(1,e.Value)
+            LibsUpdate.InsertAt(1,!LibsUpdate.Get(1))
             return
         case "Socket Lib":
-            LibsUpdate.InsertAt(2,e.Value)
+            LibsUpdate.InsertAt(2,!LibsUpdate.Get(2))
             return
         case "WebSocket Lib":
-            LibsUpdate.InsertAt(3,e.Value)
-            return
-        case "WinHttpRequest Lib":
-            LibsUpdate.InsertAt(4,e.Value)
+            LibsUpdate.InsertAt(3,!LibsUpdate.Get(3))
             return
         case "WinHttp Lib":
-            LibsUpdate.InsertAt(5,e.Value)
+            LibsUpdate.InsertAt(4,!LibsUpdate.Get(4))
+            return
+        case "WinHttpRequest Lib":
+            LibsUpdate.InsertAt(5,!LibsUpdate.Get(5))
             return
     }
 }
