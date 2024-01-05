@@ -59,23 +59,25 @@ ButtonCheck := myGui.Add("Button", "x0 y152 w80 h23", "&Check")
 myGui.Add("Text", "x85 y153 w147 h22 +0x200", "Check for any Ahk v2 Updates")
 ButtonUpdate := myGui.Add("Button", "x0 y176 w80 h23", "&Update Ahk")
 LibUpdate := myGui.Add("Button", "x81 y176 w80 h23", "&Update Libs")
+myGui.Title := "Updater"
+myGui.Show("w267 h200")
+
+; Gui Event's
 ButtonCheck.OnEvent("Click", UpdateCheck)
 ButtonUpdate.OnEvent("Click", UpdateAhk)
 LibUpdate.OnEvent("Click", UpdateLib)
+CheckBox1.OnEvent("Click", CheckUpdate)
+CheckBox2.OnEvent("Click", CheckUpdate)
+CheckBox3.OnEvent("Click", CheckUpdate)
+CheckBox4.OnEvent("Click", CheckUpdate)
+CheckBox5.OnEvent("Click", CheckUpdate)
 myGui.OnEvent('Close', (*) => ExitApp())
-myGui.Title := "Updater"
-myGui.Show("w267 h200")
 
 ; Check if user Got Wifi
 Wifi := InternetCheck()
 Status.Value := Format("Wifi Status: {1}",Wifi ? "Connected":"Disconnected")
 
 ; Gui Event Handling
-CheckBox1.OnEvent("Click", CheckUpdate)
-CheckBox2.OnEvent("Click", CheckUpdate)
-CheckBox3.OnEvent("Click", CheckUpdate)
-CheckBox4.OnEvent("Click", CheckUpdate)
-CheckBox5.OnEvent("Click", CheckUpdate)
 
 CheckUpdate(e,_) {
     global LibsUpdate
