@@ -122,19 +122,18 @@ UpdateLib(*) {
             }
             d := StrSplit(v,"/") ; get the file name
             ToolTip Format("Downloading : {1}", d.Get(d.Length)) ; get the file name
-            Sleep 2000
             try {
                 Download(v,d.Get(d.Length)) ; Download the file
             } catch Error as e {
                 MsgBox "Failed to download file: " . e.Message
                 continue
             }
+            Sleep 1000
             if FileExist(A_MyDocuments . "\AutoHotkey\Lib\" . d.Get(d.Length)) { ; check if it exist
                 FileDelete(A_MyDocuments . "\AutoHotkey\Lib\" . d.Get(d.Length)) ; if it does delete it 
             }
             if FileExist(d.Get(d.Length)) { ; check if the file was downloaded
                 ToolTip "Moving File : " . d.Get(d.Length)
-                Sleep 2000
                 try {
                     FileMove(A_ScriptDir . "\" . d.Get(d.Length),A_MyDocuments . "\AutoHotkey\Lib\" . d.Get(d.Length)) ; if it was move it to the libs dir
                     ToolTip()
@@ -142,6 +141,7 @@ UpdateLib(*) {
                     MsgBox "Failed to move file: " . e.Message
                     continue
                 }
+                Sleep 1000
             }
         }
     }
