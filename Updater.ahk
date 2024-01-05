@@ -182,7 +182,7 @@ UpdateCheck(*) {
         return
     }
     v := handler.Get("https://www.autohotkey.com/download/2.0/version.txt",4)
-    if StrCompare(v,"2.0.10") == 0 {
+    if StrCompare(v,A_AhkVersion) == 0 {
         global Update
         Update := false
         MsgBox "You'r Ahk is up to date."
