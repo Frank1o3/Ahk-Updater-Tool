@@ -22,9 +22,8 @@ InternetCheck() {
 
 ;Variables
 Wifi := InternetCheck()
-MsgBox Wifi
 
-if !Wifi {
+if Wifi {
     files := AA.getRepoFiles("thqby", "ahk2_lib")
     handler := HTTP()
 }
@@ -38,7 +37,7 @@ Wifi := false
 
 
 ; Get Lib Urls
-if !Wifi {
+if Wifi {
     for fl in files {
         if (fl["type"] == "file") {
             if fl["download_url"] != "" {
