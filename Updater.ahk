@@ -121,23 +121,28 @@ CheckUpdate(e, _) {
     switch e.Text {
         case "Json lib":
             LibsUpdate.InsertAt(1, !LibsUpdate.Get(1))
+            myGui.Submit(false)
             return
         case "Socket Lib":
             LibsUpdate.InsertAt(2, !LibsUpdate.Get(2))
+            myGui.Submit(false)
             return
         case "WebSocket Lib":
             LibsUpdate.InsertAt(3, !LibsUpdate.Get(3))
+            myGui.Submit(false)
             return
         case "WinHttp Lib":
             LibsUpdate.InsertAt(4, !LibsUpdate.Get(4))
+            myGui.Submit(false)
             return
         case "WinHttpRequest Lib":
             LibsUpdate.InsertAt(5, !LibsUpdate.Get(5))
+            myGui.Submit(false)
             return
         default:
+            myGui.Submit(false)
             return
     }
-    myGui.Submit(false)
 }
 
 UpdateLib(*) {
