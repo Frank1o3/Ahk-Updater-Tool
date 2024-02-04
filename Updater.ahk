@@ -17,11 +17,12 @@ Persistent
 ; Check wifi access func
 InternetCheck() {
     local state := DllCall("wininet\InternetGetConnectedState", "Ptr*", 0, "Int", 0, "Int")
-    return state
+    return state != 0
 }
 
 ;Variables
 Wifi := InternetCheck()
+MsgBox Wifi
 
 if Wifi {
     files := AA.getRepoFiles("thqby", "ahk2_lib")
@@ -62,7 +63,7 @@ if Wifi {
 ; Gui Setup
 myGui := Gui()
 myGui.Add("Text", "x8 y8 w125 h24 +0x200", "Install/Update Ahk v2 Libs")
-Status := myGui.Add("Text", "x135 y8 w125 h24 +0x200", "Wifi Status: ")
+Status := myGui.Add("Text", "x143 y8 w125 h24 +0x200", "Wifi Status: ")
 CheckBox1 := myGui.Add("CheckBox", "x8 y32 w120 h23", "Json lib")
 CheckBox2 := myGui.Add("CheckBox", "x8 y56 w120 h23", "Socket Lib")
 CheckBox3 := myGui.Add("CheckBox", "x8 y80 w120 h23", "WebSocket Lib")
@@ -87,7 +88,23 @@ CheckBox5.OnEvent("Click", CheckUpdate)
 myGui.OnEvent('Close', (*) => ExitApp())
 
 ; Check if user Got Wifi
-Status.Value := Format("Wifi Status: {1}", Wifi ? "Connected" : "Disconnected")
+if Wifi {
+    Status.Value := "Wifi Status: Connected"
+} else {
+    Status.Value := "Wifi Status: Disconnected"
+}
+myGui.Submit(false)
+
+; Update parts of the gui
+SetTimer(Main, 150)
+Main() {
+    if Wifi {
+        Status.Value := "Wifi Status: Connected"
+    } else {
+        Status.Value := "Wifi Status: Disconnected"
+    }
+    myGui.Submit(false)
+}
 
 ; Gui Event Handling
 
