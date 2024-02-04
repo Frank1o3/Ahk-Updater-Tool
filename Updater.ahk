@@ -120,22 +120,27 @@ CheckUpdate(e, _) {
     }
     switch e.Text {
         case "Json lib":
+            ToolTip 1
             LibsUpdate.InsertAt(1, !LibsUpdate.Get(1))
             myGui.Submit(false)
             return
         case "Socket Lib":
+            ToolTip 2
             LibsUpdate.InsertAt(2, !LibsUpdate.Get(2))
             myGui.Submit(false)
             return
         case "WebSocket Lib":
+            ToolTip 3
             LibsUpdate.InsertAt(3, !LibsUpdate.Get(3))
             myGui.Submit(false)
             return
         case "WinHttp Lib":
+            ToolTip 4
             LibsUpdate.InsertAt(4, !LibsUpdate.Get(4))
             myGui.Submit(false)
             return
         case "WinHttpRequest Lib":
+            ToolTip 5
             LibsUpdate.InsertAt(5, !LibsUpdate.Get(5))
             myGui.Submit(false)
             return
