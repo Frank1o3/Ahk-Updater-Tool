@@ -16,16 +16,15 @@ Persistent
 
 ; Check wifi access func
 InternetCheck() {
-    local flags := DllCall("wininet\InternetGetConnectedState", "Ptr*", 0, "Int", 0, "Int")
-    return flags != 0
+    local state := DllCall("wininet\InternetGetConnectedState", "Ptr*", 0, "Int", 0, "Int")
+    return state
 }
-
-
 
 ;Variables
 Wifi := InternetCheck()
+MsgBox Wifi
 
-if Wifi {
+if !Wifi {
     files := AA.getRepoFiles("thqby", "ahk2_lib")
     handler := HTTP()
 }
@@ -39,21 +38,23 @@ Wifi := false
 
 
 ; Get Lib Urls
-for fl in files {
-    if (fl["type"] == "file") {
-        if fl["download_url"] != "" {
-            d := StrSplit(fl["download_url"], "/")
-            name := d.Get(d.Length)
-            if name == "JSON.ahk" {
-                LibsUrl.Push(fl["download_url"])
-            } else if name == "Socket.ahk" {
-                LibsUrl.Push(fl["download_url"])
-            } else if name == "WebSocket.ahk" {
-                LibsUrl.Push(fl["download_url"])
-            } else if name == "Winhttp.ahk" {
-                LibsUrl.Push(fl["download_url"])
-            } else if name == "WinHttpRequest.ahk" {
-                LibsUrl.Push(fl["download_url"])
+if !Wifi {
+    for fl in files {
+        if (fl["type"] == "file") {
+            if fl["download_url"] != "" {
+                d := StrSplit(fl["download_url"], "/")
+                name := d.Get(d.Length)
+                if name == "JSON.ahk" {
+                    LibsUrl.Push(fl["download_url"])
+                } else if name == "Socket.ahk" {
+                    LibsUrl.Push(fl["download_url"])
+                } else if name == "WebSocket.ahk" {
+                    LibsUrl.Push(fl["download_url"])
+                } else if name == "Winhttp.ahk" {
+                    LibsUrl.Push(fl["download_url"])
+                } else if name == "WinHttpRequest.ahk" {
+                    LibsUrl.Push(fl["download_url"])
+                }
             }
         }
     }
