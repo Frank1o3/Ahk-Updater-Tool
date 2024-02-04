@@ -93,6 +93,10 @@ Status.Value := Format("Wifi Status: {1}", Wifi ? "Connected" : "Disconnected")
 ; Gui Event Handling
 
 CheckUpdate(e, _) {
+    global Wifi
+    if !Wifi {
+        return
+    }
     global LibsUpdate
     switch e.Text {
         case "Json lib":
