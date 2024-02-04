@@ -22,38 +22,38 @@ InternetCheck() {
 
 ;Variables
 Wifi := InternetCheck()
-MsgBox Wifi
 
-if Wifi {
+if Wifi == 1 {
     files := AA.getRepoFiles("thqby", "ahk2_lib")
     handler := HTTP()
 }
 
 DownloadLoc := "C:\Users\" . A_UserName . "\Downloads"
 Version := ""
-LibsUrl := []
+LibsUrl := Array(false, false, false, false, false)
 LibsUpdate := Array(false, false, false, false, false)
 Update := false
 Wifi := false
 
 
 ; Get Lib Urls
-if Wifi {
+Wifi := InternetCheck()
+if Wifi == 1 {
     for fl in files {
         if (fl["type"] == "file") {
             if fl["download_url"] != "" {
                 d := StrSplit(fl["download_url"], "/")
                 name := d.Get(d.Length)
                 if name == "JSON.ahk" {
-                    LibsUrl.Push(fl["download_url"])
+                    LibsUrl.InsertAt(1, fl["download_url"])
                 } else if name == "Socket.ahk" {
-                    LibsUrl.Push(fl["download_url"])
+                    LibsUrl.InsertAt(2, fl["download_url"])
                 } else if name == "WebSocket.ahk" {
-                    LibsUrl.Push(fl["download_url"])
+                    LibsUrl.InsertAt(3, fl["download_url"])
                 } else if name == "Winhttp.ahk" {
-                    LibsUrl.Push(fl["download_url"])
+                    LibsUrl.InsertAt(4, fl["download_url"])
                 } else if name == "WinHttpRequest.ahk" {
-                    LibsUrl.Push(fl["download_url"])
+                    LibsUrl.InsertAt(5, fl["download_url"])
                 }
             }
         }
@@ -88,7 +88,8 @@ CheckBox5.OnEvent("Click", CheckUpdate)
 myGui.OnEvent('Close', (*) => ExitApp())
 
 ; Check if user Got Wifi
-if Wifi {
+Wifi := InternetCheck()
+if Wifi == 1 {
     Status.Value := "Wifi Status: Connected"
 } else {
     Status.Value := "Wifi Status: Disconnected"
@@ -97,8 +98,11 @@ myGui.Submit(false)
 
 ; Update parts of the gui
 SetTimer(Main, 150)
+
 Main() {
-    if Wifi {
+    global Wifi
+    Wifi := InternetCheck()
+    if Wifi == 1 {
         Status.Value := "Wifi Status: Connected"
     } else {
         Status.Value := "Wifi Status: Disconnected"
@@ -110,10 +114,10 @@ Main() {
 
 CheckUpdate(e, _) {
     global Wifi
-    if !Wifi {
+    global LibsUpdate
+    if Wifi == 0 {
         return
     }
-    global LibsUpdate
     switch e.Text {
         case "Json lib":
             LibsUpdate.InsertAt(1, !LibsUpdate.Get(1))
@@ -130,22 +134,25 @@ CheckUpdate(e, _) {
         case "WinHttpRequest Lib":
             LibsUpdate.InsertAt(5, !LibsUpdate.Get(5))
             return
+        default:
+            return
     }
+    myGui.Submit(false)
 }
 
 UpdateLib(*) {
     global LibsUpdate
     global LibsUrl
     global Wifi
-    if !Wifi {
+    if Wifi == 0 {
         return
     }
     local updatelibs := Array(
         LibsUpdate.Get(1) ? LibsUrl.Get(1) : false,
         LibsUpdate.Get(2) ? LibsUrl.Get(2) : false,
-            LibsUpdate.Get(3) ? LibsUrl.Get(3) : false,
-            LibsUpdate.Get(4) ? LibsUrl.Get(4) : false,
-            LibsUpdate.Get(5) ? LibsUrl.Get(5) : false
+        LibsUpdate.Get(3) ? LibsUrl.Get(3) : false,
+        LibsUpdate.Get(4) ? LibsUrl.Get(4) : false,
+        LibsUpdate.Get(5) ? LibsUrl.Get(5) : false
     )
     for v in updatelibs {
         if v != false {
@@ -184,7 +191,7 @@ UpdateAhk(*)
     global Update
     global Version
     global Wifi
-    if !Wifi {
+    if Wifi == 0 {
         return
     }
     if Update {
@@ -210,7 +217,7 @@ UpdateAhk(*)
 UpdateCheck(*) {
     global handler
     global Wifi
-    if !Wifi {
+    if Wifi == 0 {
         return
     }
     v := handler.Get("https://www.autohotkey.com/download/2.0/version.txt", 4)
