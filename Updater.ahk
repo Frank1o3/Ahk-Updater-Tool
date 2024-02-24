@@ -85,7 +85,7 @@ CheckBox2.OnEvent("Click", CheckUpdate)
 CheckBox3.OnEvent("Click", CheckUpdate)
 CheckBox4.OnEvent("Click", CheckUpdate)
 CheckBox5.OnEvent("Click", CheckUpdate)
-myGui.OnEvent('Close', (*) => ExitApp())
+myGui.OnEvent('Close', (Edit_) => ExitApp())
 
 ; Check if user Got Wifi
 Wifi := InternetCheck()
@@ -150,7 +150,7 @@ CheckUpdate(e, _) {
     }
 }
 
-UpdateLib(*) {
+UpdateLib(e, _) {
     global LibsUpdate
     global LibsUrl
     global Wifi
@@ -196,7 +196,7 @@ UpdateLib(*) {
     }
 }
 
-UpdateAhk(*)
+UpdateAhk(e, _)
 {
     global Update
     global Version
@@ -224,7 +224,7 @@ UpdateAhk(*)
     }
 }
 
-UpdateCheck(*) {
+UpdateCheck(e, _) {
     global handler
     global Wifi
     if Wifi == 0 {
